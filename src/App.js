@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import { bindActionCreators } from "redux";
 import {actionCreators} from './actions/index';
+import Comment from './components/Comment';
 import "normalize.css";
 import "./styles/styles.scss";
 
@@ -22,6 +23,7 @@ const App = () => {
     repliedTo: "",
     parentComment: 0})}>dsfgdfg</button>
       <button onClick={()=>removeComment(0)}>kjlvcb</button>
+      <Comment />
     </div>
   )
 }
