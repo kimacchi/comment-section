@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import { bindActionCreators } from "redux";
+import {actionCreators} from './actions/index';
+import "normalize.css";
+import "./styles/styles.scss";
 
-function App() {
+const App = () => {
+
+  const state = useSelector((state)=> state);
+  console.log(state);
+  const dispatch = useDispatch();
+  const {removeComment, addComment} = bindActionCreators(actionCreators, dispatch);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={()=>addComment({id: 0,
+    content: "",
+    score: 0,
+    username: "",
+    createdAt: 0,
+    repliedTo: "",
+    parentComment: 0})}>dsfgdfg</button>
+      <button onClick={()=>removeComment(0)}>kjlvcb</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
