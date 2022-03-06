@@ -2,7 +2,6 @@
 const templateState = {
     id: 0,
     content: "",
-    // commentId: 0,
     score: 0,
     username: "",
     createdAt: 0,
@@ -28,7 +27,7 @@ export default (state=defaultState, action)=>{
             return [...state, action.comment];
         case "EDIT_COMMENT":
             return state.map((comment)=>{
-                if(comment.id === action.comment.id){
+                if(comment.id === action.id){
                     return {...comment, ...action.updates}
                 } else {
                     return comment;
@@ -46,7 +45,7 @@ export default (state=defaultState, action)=>{
             })
         case "DOWNVOTE_COMMENT":
             return state.map((comment) => {
-                if(comment.id === action.comment.id){
+                if(comment.id === action.id){
                     return {...comment, score: comment.score - 1}
                 } else {
                     return comment;

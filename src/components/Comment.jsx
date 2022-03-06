@@ -1,58 +1,51 @@
 import {useSelector, useDispatch} from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
 import { bindActionCreators } from "redux";
 import {actionCreators} from '../actions/index';
-import moment from 'moment';
-
-// moment().format();
-
-// var now = moment();
-// var timetest = moment.unix(0);
+import AddComment from "./AddComment";
 
 export default ()=>{
-    const [localState, setState] = useState({
-        id: 0,
-        content: "",
-        score: 0,
-        username: "",
-        createdAt: 0,
-        repliedTo: "",
-        parentComment: 0
-    })
-    const state = useSelector((state)=>state);
+    const [replyState, setState] = useState({isOn: false, parentId: "0", repliedTo: ""});
+    const state = useSelector((state)=> state);
     const dispatch = useDispatch();
-    const {addComment} = bindActionCreators(actionCreators, dispatch);
 
-    const onTextChange = (e)=>{
-        const text = e.target.value;
-        setState((prevState)=>({...prevState, content: text}))
+    const {editComment, upvoteComment, downvoteComment, replyComment, removeComment} = bindActionCreators(actionCreators, dispatch);
+
+    const replyStateChange = (id, username, isOn = replyState.isOn)=>{
+        setState({isOn: !isOn, parentId: id, repliedTo: username});
     }
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-        addComment({
-            id: uuidv4(),
-            content: localState.content,
-            score: 0,
-            username: "randomPerson",
-            createdAt: Date.now(),
-            repliedTo: "",
-            parentComment: 0
-        });
-        setState((prevState)=>({...prevState, content: ""}));
-    }
-    
+
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    value={localState.content}
-                    onChange={onTextChange}
-                >
-                </textarea>
-                <button>submit</button>
+            {
+                state.map((comment)=>{
+                    /*
+                        maybe you should change the add_comment action so that it arranges the array
+                        in the correct reply order, using splice might be a good idea
+                    */
 
-            </form>
+                    return (
+                        <div key={comment.id} className={!!comment.parentComment ? "is-a-reply comment" : "comment"}>
+                            <div>
+                                <button onClick={()=> upvoteComment(comment.id)}>+</button>
+                                <span>{comment.score}</span>
+                                <button onClick={()=> downvoteComment(comment.id)}>-</button>
+                            </div>
+                            <div>
+                                <p>img</p>
+                                <p>{comment.username}</p>
+                                <div onClick={()=>replyStateChange(comment.id, comment.username)}>
+                                    Reply
+                                </div>
+                            </div>
+                            <div>
+                                <p>{comment.content}</p>
+                            </div>
+                            {replyState.parentId === comment.id && replyState.isOn ? <AddComment repliedTo={`${replyState.repliedTo}`} parentComment={replyState.parentId}/> : undefined}
+                        </div>
+                    )
+                })
+            }
         </div>
     )
 }
