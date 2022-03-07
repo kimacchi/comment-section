@@ -10,7 +10,6 @@ import "./styles/styles.scss";
 const App = () => {
 
   const state = useSelector((state)=> state);
-  console.log(state);
   const dispatch = useDispatch();
   const {removeComment, addComment} = bindActionCreators(actionCreators, dispatch);
 

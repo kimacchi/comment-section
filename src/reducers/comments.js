@@ -24,6 +24,15 @@ const replyTemplate= {
 export default (state=defaultState, action)=>{
     switch(action.type){
         case "ADD_COMMENT":
+            if(action.comment.parentComment != undefined){
+                state.splice(state.findIndex((e)=> e.id === action.comment.parentComment) + 1, 0, action.comment);
+                var arr = state.filter((e)=> e.parentComment === action.comment.parentComment);
+                arr = arr.sort((a, b)=>{
+                    return a.createdAt < b.createdAt ? -1 : 1;
+                })
+                state.splice(state.findIndex((e)=> e.id === action.comment.parentComment) + 1, arr.length, ...arr);
+                return [...state];
+            }
             return [...state, action.comment];
         case "EDIT_COMMENT":
             return state.map((comment)=>{

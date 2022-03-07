@@ -1,6 +1,6 @@
 import {useSelector, useDispatch} from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { bindActionCreators } from "redux";
 import {actionCreators} from '../actions/index';
 import moment from 'moment';
@@ -47,6 +47,7 @@ export default (repliedTo="", parentComment="0")=>{
         <div>
             <form onSubmit={handleSubmit}>
                 <textarea
+                    // defaultValue={localState.content}
                     value={localState.content}
                     onChange={onTextChange}
                 >
