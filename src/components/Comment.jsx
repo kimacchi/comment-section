@@ -40,14 +40,14 @@ export default ()=>{
 
 
     return (
-        <div>
+        <div className="comments-container">
             {
-                state.map((comment)=>{
-
+                state.comments.map((comment)=>{
                     return (
-                        <div key={comment.id}>
-                            {
-                            replyState.editing && replyState.editingId === comment.id ? 
+                        <div key={comment.id} className="comments-wrapper">
+                        {
+                        replyState.editing && replyState.editingId === comment.id ?
+                        <div className={!!comment.parentComment ? "comment-for-border-edit comment-reset-style" : "comment-reset-style"}>
                             <div className={!!comment.parentComment ? "is-a-reply-edit comment-edit" : "comment-edit"}>
                                 <div>
                                     <button onClick={()=> upvoteComment(comment.id)}>+</button>
@@ -73,34 +73,39 @@ export default ()=>{
                                     </form>
                                 </div>
                             </div>
-                            : 
+                        </div>
+                        :
+                        <div className={!!comment.parentComment ? "comment-for-border comment-reset-style" : "comment-reset-style"}>
                             <div className={!!comment.parentComment ? "is-a-reply comment" : "comment"}>
-                                <div>
+                                <div className="comment-score-counter">
                                     <button onClick={()=> upvoteComment(comment.id)}>+</button>
                                     <span>{comment.score}</span>
                                     <button onClick={()=> downvoteComment(comment.id)}>-</button>
                                 </div>
-                                <div>
-                                    <p>img</p>
+                                <div className="comment-user-info">
+                                    <div className="comment-user-image" />
                                     <p>{comment.username}</p>
-                                    <div onClick={()=>replyStateChange(comment.id, comment.username)}>
+                                </div>
+                                <div className="comment-utilities">
+                                    <div className="comment-utilities-item" onClick={()=>replyStateChange(comment.id, comment.username)}>
                                         Reply
                                     </div>
-                                    <div onClick={()=>deleteComment(comment.id)}>
+                                    <div className="comment-utilities-item" onClick={()=>deleteComment(comment.id)}>
                                         Delete
                                     </div>
-                                    <div onClick={()=> editChange(comment.id)}>
+                                    <div className="comment-utilities-item" onClick={()=> editChange(comment.id)}>
                                         Edit
                                     </div>
                                 </div>
-                                <div>
-                                    <p>{comment.content}</p>
+                                <div className="comment-content">
+                                    <p>{!!comment.parentComment ? `@${comment.repliedTo} ${comment.content}` : comment.content}</p>
                                 </div>
-                                {replyState.parentId === comment.id && replyState.isOn ? <AddComment repliedTo={`${replyState.repliedTo}`} parentComment={replyState.parentId}/> : undefined}
                             </div>
-                            }
+                            {replyState.parentId === comment.id && replyState.isOn ? <AddComment repliedTo={`${replyState.repliedTo}`} isareply={!!comment.parentComment} parentComment={replyState.parentId}/> : undefined}
                         </div>
-                    )
+                        }
+                    </div>
+                    );
                 })
             }
         </div>

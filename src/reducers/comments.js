@@ -1,6 +1,7 @@
 
 const templateState = {
     id: 0,
+    userId: "",
     content: "",
     score: 0,
     username: "",
@@ -24,7 +25,11 @@ const replyTemplate= {
 export default (state=defaultState, action)=>{
     switch(action.type){
         case "ADD_COMMENT":
-            if(action.comment.parentComment != undefined){
+            if(action.comment.content.trim() === ""){
+                alert("empty comments are not allowed");
+                return [...state];
+            }
+            if(action.comment.parentComment != ""){
                 state.splice(state.findIndex((e)=> e.id === action.comment.parentComment) + 1, 0, action.comment);
                 var arr = state.filter((e)=> e.parentComment === action.comment.parentComment);
                 arr = arr.sort((a, b)=>{
@@ -37,6 +42,10 @@ export default (state=defaultState, action)=>{
         case "EDIT_COMMENT":
             return state.map((comment)=>{
                 if(comment.id === action.id){
+                    if(action.updates.content.trim() === ""){
+                        alert("empty comments are not allowed");
+                        return comment
+                    }
                     return {...comment, ...action.updates}
                 } else {
                     return comment;
