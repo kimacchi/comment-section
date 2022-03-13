@@ -84,7 +84,7 @@ export default ()=>{
                                 </div>
                                 <div className="comment-user-info">
                                     <div className="comment-user-image" />
-                                    <p>{comment.username}</p>
+                                    <div className="comment-user-username"><p>{comment.username}</p></div>
                                 </div>
                                 <div className="comment-utilities">
                                     <div className="comment-utilities-item" onClick={()=>replyStateChange(comment.id, comment.username)}>
