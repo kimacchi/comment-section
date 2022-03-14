@@ -97,3 +97,108 @@
     border-left: 1px solid $grayish-blue;
     width: 49vw;
 }
+
+@media screen and (max-width: 550px) {
+    .comments-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .comments-wrapper {
+        width: 70vw;
+        height:fit-content;
+    }
+    
+    .comment {
+        display: grid; 
+        grid-auto-columns: 1fr; 
+        grid-template-columns: 0.8fr 1.2fr; 
+        grid-template-rows: 0.2fr 1.0fr 0.4fr; 
+        gap: 0px 0px; 
+        grid-template-areas: 
+        "comment-user-info comment-user-info"
+        "comment-content comment-content"
+        "comment-score-counter comment-utilities"; 
+        background-color: white;
+        border-radius: 15px;
+        padding: 1vw 1vw 1vw 1vw;
+        margin: 1vh 0 1vh 0;
+        width: 70vw;
+    }
+    
+    .comment-score-counter {
+        grid-area: comment-score-counter;
+        display: flex;
+        // margin-top: 6vh;
+        margin-right: 0.9vh;
+        margin-bottom: 1.7vh;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .comment-user-username {
+        width: 6vw;
+        height: 6vw;
+    }
+    
+    .comment-score-counter button {
+        width: 6vw;
+        height: 6vw;
+    }
+    
+    .comment-user-info{
+        grid-area: comment-user-info;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .comment-user-image {
+        width: 4.5vw;
+        height: 4.5vw;
+        border-radius: 50%;
+        background-color: aqua;
+        margin-right: 1vw;
+    }
+    
+    .comment-utilities {
+        display: flex;
+        font-size: 1.4rem;
+        grid-area: comment-utilities;
+        justify-content:space-around;
+        align-items: center;
+    }
+    
+    .comment-utilities-item {
+        margin-left: 0.9vw;
+        color: red;
+    }
+    
+    .comment-utilities-item:hover{
+        cursor: pointer;
+    }
+    
+    .comment-content{
+        grid-area: comment-content;
+    }
+    
+    
+    
+    .is-a-reply {
+        margin-left: 5vw;
+        width: 64vw;
+        float: right;
+    }
+    
+    .comment-for-border {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        float: right;
+        border-left: 1px solid $grayish-blue;
+        width: 67vw;
+    }
+}
